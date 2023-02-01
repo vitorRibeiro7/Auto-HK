@@ -28,9 +28,30 @@ export async function appRoutes(app: FastifyInstance) {
 
     })
 
+    app.get('/veiculo/find', async (request) => {
+
+        const qParams = z.object({
+            q: z.string()
+        })
+
+        const { q } = qParams.parse(request.query)
+
+        const veiculos = await prisma.veiculo.findMany({
+            where: {
+                OR: [
+                    { veiculo: { contains: q } },
+                    { marca: { contains: q } },
+                    { desc: { contains: q } },
+                ]
+            }
+        })
+
+        return veiculos
+    })
+
     app.get('/veiculos', async () => {
 
-        const vehs = prisma.veiculo.findMany()
+        const vehs = await prisma.veiculo.findMany()
 
         return vehs
     })

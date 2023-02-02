@@ -5,10 +5,10 @@ import { api } from "../../services/api"
 
 interface List {
     id: number;
-    marca: string;
-    veiculo: string;
-    ano: number;
-    vendido: boolean;
+    brand: string;
+    name: string;
+    year: number;
+    sold: boolean;
 }
 
 function List() {
@@ -17,7 +17,7 @@ function List() {
 
     const getList = async () => {
         try {
-            const { data } = await api.get(`/veiculos`);
+            const { data } = await api.get(`/vehicles`);
             setList(data)
             console.log(data)
         } catch (error) {
@@ -38,7 +38,7 @@ function List() {
         <div className="flex flex-col gap-1 h-auto mb-4">
             {
                 list.map(vehicle => (
-                    <Card key={vehicle.id} brand={vehicle.marca} name={vehicle.veiculo} year={vehicle.ano} sold={vehicle.vendido} click={() => handleClick(vehicle)} />
+                    <Card key={vehicle.id} brand={vehicle.brand} name={vehicle.name} year={vehicle.year} sold={vehicle.sold} click={() => handleClick(vehicle)} />
                 )
                 )
             }

@@ -10,13 +10,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model veiculo {
+model vehicle {
   id        Int      @id @default(autoincrement())
-  veiculo   String
-  marca     String
-  ano       Int
+  name      String
+  brand     String
+  year      Int
   desc      String
-  vendido   Boolean
+  sold      Boolean
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 }

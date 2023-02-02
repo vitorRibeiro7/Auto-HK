@@ -4,31 +4,31 @@ import { prisma } from './lib/prisma';
 
 export async function appRoutes(app: FastifyInstance) {
 
-    app.post('/veiculo', async (request) => {
+    app.post('/vehicle', async (request) => {
 
-        const createVeiculoBody = z.object({
-            veiculo: z.string(),
-            marca: z.string(),
-            ano: z.number().min(1980).max(2024),
+        const createvehicleBody = z.object({
+            name: z.string(),
+            brand: z.string(),
+            year: z.number().min(1980).max(2024),
             desc: z.string(),
-            vendido: z.boolean()
+            sold: z.boolean()
         })
 
-        const { veiculo, marca, ano, desc, vendido } = createVeiculoBody.parse(request.body)
+        const { name, brand, year, desc, sold } = createvehicleBody.parse(request.body)
 
-        await prisma.veiculo.create({
+        await prisma.vehicle.create({
             data: {
-                veiculo,
-                marca,
-                ano,
+                name,
+                brand,
+                year,
                 desc,
-                vendido,
+                sold,
             }
         })
 
     })
 
-    app.get('/veiculo/find', async (request) => {
+    app.get('/vehicle/find', async (request) => {
 
         const qParams = z.object({
             q: z.string()
@@ -36,27 +36,27 @@ export async function appRoutes(app: FastifyInstance) {
 
         const { q } = qParams.parse(request.query)
 
-        const veiculos = await prisma.veiculo.findMany({
+        const vehicles = await prisma.vehicle.findMany({
             where: {
                 OR: [
-                    { veiculo: { contains: q } },
-                    { marca: { contains: q } },
+                    { name: { contains: q } },
+                    { brand: { contains: q } },
                     { desc: { contains: q } },
                 ]
             }
         })
 
-        return veiculos
+        return vehicles
     })
 
-    app.get('/veiculos', async () => {
+    app.get('/vehicles', async () => {
 
-        const vehs = await prisma.veiculo.findMany()
+        const vehs = await prisma.vehicle.findMany()
 
         return vehs
     })
 
-    app.get('/veiculo/:id', async (request) => {
+    app.get('/vehicle/:id', async (request) => {
 
         const idVehParams = z.object({
             id: z.string()
@@ -66,7 +66,7 @@ export async function appRoutes(app: FastifyInstance) {
         const parsedId = parseInt(id, 10);
 
 
-        const veh = prisma.veiculo.findMany({
+        const veh = prisma.vehicle.findMany({
             where: {
                 id: parsedId
             }
@@ -75,73 +75,73 @@ export async function appRoutes(app: FastifyInstance) {
         return veh
     })
 
-    app.put('/veiculo/:id', async (request) => {
+    app.put('/vehicle/:id', async (request) => {
         const idVehParams = z.object({
             id: z.string()
         })
 
-        const createVeiculoBody = z.object({
-            veiculo: z.string(),
-            marca: z.string(),
-            ano: z.number().min(1980).max(2024),
+        const createvehicleBody = z.object({
+            name: z.string(),
+            brand: z.string(),
+            year: z.number().min(1980).max(2024),
             desc: z.string(),
-            vendido: z.boolean()
+            sold: z.boolean()
         })
 
         const { id } = idVehParams.parse(request.params);
         const parsedId = parseInt(id, 10);
 
-        const { veiculo, marca, ano, desc, vendido } = createVeiculoBody.parse(request.body)
+        const { name, brand, year, desc, sold } = createvehicleBody.parse(request.body)
 
-        await prisma.veiculo.update({
+        await prisma.vehicle.update({
             where: {
                 id: parsedId
             },
             data: {
-                veiculo,
-                marca,
-                ano,
+                name,
+                brand,
+                year,
                 desc,
-                vendido,
+                sold,
                 updatedAt: new Date()
             }
         });
     });
 
-    app.patch('/veiculo/:id', async (request) => {
+    app.patch('/vehicle/:id', async (request) => {
         const idVehParams = z.object({
             id: z.string()
         })
 
-        const createVeiculoBody = z.object({
-            veiculo: z.string().optional(),
-            marca: z.string().optional(),
-            ano: z.number().min(1980).max(2024).optional(),
+        const createvehicleBody = z.object({
+            name: z.string().optional(),
+            brand: z.string().optional(),
+            year: z.number().min(1980).max(2024).optional(),
             desc: z.string().optional(),
-            vendido: z.boolean().optional()
+            sold: z.boolean().optional()
         })
 
         const { id } = idVehParams.parse(request.params);
         const parsedId = parseInt(id, 10);
 
-        const { veiculo, marca, ano, desc, vendido } = createVeiculoBody.parse(request.body)
+        const { name, brand, year, desc, sold } = createvehicleBody.parse(request.body)
 
-        await prisma.veiculo.update({
+        await prisma.vehicle.update({
             where: {
                 id: parsedId
             },
             data: {
-                veiculo,
-                marca,
-                ano,
+                name,
+                brand,
+                year,
                 desc,
-                vendido,
+                sold,
                 updatedAt: new Date()
             }
         })
     })
 
-    app.delete('/veiculo/:id', async (request) => {
+    app.delete('/vehicle/:id', async (request) => {
         const idVehParams = z.object({
             id: z.string()
         })
@@ -149,7 +149,7 @@ export async function appRoutes(app: FastifyInstance) {
         const { id } = idVehParams.parse(request.params)
         const parsedId = parseInt(id, 10)
 
-        await prisma.veiculo.delete({
+        await prisma.vehicle.delete({
             where: {
                 id: parsedId
             }

@@ -5,6 +5,7 @@ import VehInfos from "../VehInfos"
 
 import { useState, useEffect } from "react"
 import { api } from "../../services/api"
+import Loading from "../Loading"
 
 interface vehicleInfos {
     name: string;
@@ -15,49 +16,57 @@ interface vehicleInfos {
 
 function Main() {
 
-    const [vehicleInfos, setVehicleInfos] = useState<vehicleInfos[]>([])
+    const [vehicleInfos, setVehicleInfos] = useState([])
+    const [descLoading, setDescLoading] = useState(true)
 
-    const getVeh = async () => {
+    const getVeh = async (vehicle: any) => {
         try {
-            const { data } = await api.get(`/vehicle/1`);
+            setDescLoading(true)
+            const { data } = await api.get(`/vehicle/${vehicle.id}`);
             setVehicleInfos(data)
-            console.log(data)
+            // console.log(data)
+            setDescLoading(false)
         } catch (error) {
             console.log(error);
+            setDescLoading(true)
+
         } finally {
         }
     }
 
-    useEffect(() => {
-        getVeh()
-    }, [])
-
     return (
         <main className="flex justify-center flex-col items-center w-full h-full">
-            <div className="w-10/12 h-5/6 p-5 flex flex-col flex-nowrap items-center justify-center bg-slate-50">
-                <div className="bg-slate-50 w-full h-1/6 flex justify-center">
+            <div className="w-10/12 h-5/6 p-5 flex flex-col flex-nowrap items-center justify-start bg-slate-50">
+                <div className="bg-slate-50 w-full h-24 mb-5 flex justify-center">
                     <Header />
                 </div>
-                <div className=" w-full h-5/6 flex flex-row bg-cyan-300">
+                <div className=" w-full h-5/6 flex flex-row-reverse flex-wrap">
                     <div className="h-full w-1/2 p-5 bg-slate-50 flex flex-col justify-between">
-                        <div>
-                            <p>Lista de Veiculos</p>
+                        <div className="h-auto">
+                            <p className="text-zinc-600 font-medium">Detalhes</p>
                         </div>
-                        <div className="h-full overflow-y-scroll">
-                            <List />
+                        <div className="h-full flex justify-center items-center">
+                            {
+                                !descLoading ?
+                                    <VehInfos vehInfo={vehicleInfos} />
+                                    :
+                                    <Loading />
+                            }
                         </div>
                         <div>
                             <Search />
                         </div>
                     </div>
-                    <div className="h-full w-1/2 p-5 bg-slate-50 flex flex-col justify-between">
-                        <div>
-                            <p>Detalhes</p>
+                    <div className="h-full w-1/2 p-5 bg-slate-50 flex gap-auto flex-col justify-between">
+                        <div className="h-[80%]">
+                            <div className="h-auto">
+                                <p className="text-zinc-600 font-medium">Lista de Veiculos</p>
+                            </div>
+                            <div className="h-full overflow-y-scroll">
+                                <List click={getVeh} />
+                            </div>
                         </div>
-                        <div className="h-full">
-                            <VehInfos vehInfo={vehicleInfos} />
-                        </div>
-                        <div>
+                        <div className="h-auto">
                             <Search />
                         </div>
                     </div>

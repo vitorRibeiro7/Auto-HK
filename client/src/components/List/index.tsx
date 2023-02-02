@@ -1,4 +1,6 @@
 import Card from "./Card"
+import Loading from "../Loading"
+
 import { useEffect, useState } from "react"
 
 import { api } from "../../services/api"
@@ -11,23 +13,23 @@ interface List {
     sold: boolean;
 }
 
-function List() {
+function List({ click }: any) {
 
     const [list, setList] = useState<List[]>([])
+    const [loading, setLoading] = useState(false)
 
     const getList = async () => {
         try {
+            setLoading(true)
             const { data } = await api.get(`/vehicles`);
             setList(data)
-            console.log(data)
+            // console.log(data)
+            setLoading(false)
         } catch (error) {
             console.log(error);
+            setLoading(true)
         } finally {
         }
-    }
-
-    const handleClick = (vehicle: object) => {
-        console.log(vehicle)
     }
 
     useEffect(() => {
@@ -35,12 +37,14 @@ function List() {
     }, [])
 
     return (
-        <div className="flex flex-col gap-1 h-auto mb-4">
+        <div className={`flex flex-col gap-2 h-96 pb-14 w-full mb-4 ${loading ? "items-center justify-center" : ''} `}>
+
             {
-                list.map(vehicle => (
-                    <Card key={vehicle.id} brand={vehicle.brand} name={vehicle.name} year={vehicle.year} sold={vehicle.sold} click={() => handleClick(vehicle)} />
-                )
-                )
+                !loading ?
+                    list.map(vehicle => (
+                        <Card key={vehicle.id} brand={vehicle.brand} name={vehicle.name} year={vehicle.year} sold={vehicle.sold} click={() => click(vehicle)} />
+                    )
+                    ) : <Loading />
             }
         </div>
     )

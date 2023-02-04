@@ -9,6 +9,7 @@ import Loading from "../Loading"
 
 interface vehicleInfos {
     name: string;
+    desc: string;
     brand: string;
     year: number;
     sold: boolean;
@@ -16,8 +17,10 @@ interface vehicleInfos {
 
 function Main() {
 
-    const [vehicleInfos, setVehicleInfos] = useState([])
+
+    const [vehicleInfos, setVehicleInfos] = useState<vehicleInfos[]>([])
     const [descLoading, setDescLoading] = useState(true)
+
 
     const getVeh = async (vehicle: any) => {
         try {

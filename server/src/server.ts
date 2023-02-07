@@ -10,5 +10,5 @@ app.register(appRoutes)
 app.listen({
     port: 3334,
 }).then(() => {
-    console.log("Server running...")
+    console.log("Servidor rodando.")
 })

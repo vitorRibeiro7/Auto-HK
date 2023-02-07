@@ -40,8 +40,7 @@ export async function appRoutes(app: FastifyInstance) {
             where: {
                 OR: [
                     { name: { contains: q } },
-                    { brand: { contains: q } },
-                    { desc: { contains: q } },
+                    { brand: { contains: q } }
                 ]
             }
         })

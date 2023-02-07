@@ -32,10 +32,10 @@ function Main() {
     const [listLoading, setListLoading] = useState(false)
 
 
-    const getList = async () => {
+    const getList = async (toSearch: string) => {
         try {
             setListLoading(true)
-            const { data } = await api.get(`/vehicles`);
+            const { data } = await api.get(`/vehicle/find?q=${toSearch}`);
             setList(data)
             // console.log(data)
             setListLoading(false)
@@ -46,9 +46,13 @@ function Main() {
         }
     }
 
+    function tryToserach(tosearch: any) {
+        setListSearch(tosearch)
+    }
+
     useEffect(() => {
-        getList()
-    }, [])
+        getList(listSearch)
+    }, [listSearch])
 
 
     const getVeh = async (vehicle: any) => {
@@ -85,9 +89,6 @@ function Main() {
                                     <Loading />
                             }
                         </div>
-                        <div>
-                            <Search />
-                        </div>
                     </div>
                     <div className="h-full w-1/2 p-5 bg-slate-50 flex gap-auto flex-col justify-between">
                         <div className="h-[80%]">
@@ -99,7 +100,7 @@ function Main() {
                             </div>
                         </div>
                         <div className="h-auto">
-                            <Search />
+                            <Search onchange={tryToserach} />
                         </div>
                     </div>
                 </div>

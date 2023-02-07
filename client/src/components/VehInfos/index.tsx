@@ -1,12 +1,6 @@
-import { useState } from "react";
-
 function VehInfos({ vehInfo }: any) {
 
     const [vehInfoItem] = vehInfo;
-
-    const showInfos = () => {
-        console.log(vehInfoItem)
-    }
 
     return (
         <div className="flex flex-col gap-[2vw] bg-slate-100 h-full min-w-full p-6">

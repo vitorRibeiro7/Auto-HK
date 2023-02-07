@@ -7,7 +7,7 @@ import { useState, useEffect } from "react"
 import { api } from "../../services/api"
 import Loading from "../Loading"
 
-interface vehicleInfos {
+interface vehicleInfosTypes {
     name: string;
     desc: string;
     brand: string;
@@ -15,11 +15,40 @@ interface vehicleInfos {
     sold: boolean;
 }
 
+interface ListTypes {
+    id: number;
+    brand: string;
+    name: string;
+    year: number;
+    sold: boolean;
+}
+
 function Main() {
 
-
-    const [vehicleInfos, setVehicleInfos] = useState<vehicleInfos[]>([])
+    const [vehicleInfos, setVehicleInfos] = useState<vehicleInfosTypes[]>([])
     const [descLoading, setDescLoading] = useState(true)
+    const [list, setList] = useState<ListTypes[]>([])
+    const [listSearch, setListSearch] = useState("")
+    const [listLoading, setListLoading] = useState(false)
+
+
+    const getList = async () => {
+        try {
+            setListLoading(true)
+            const { data } = await api.get(`/vehicles`);
+            setList(data)
+            // console.log(data)
+            setListLoading(false)
+        } catch (error) {
+            console.log(error);
+            setListLoading(true)
+        } finally {
+        }
+    }
+
+    useEffect(() => {
+        getList()
+    }, [])
 
 
     const getVeh = async (vehicle: any) => {
@@ -66,7 +95,7 @@ function Main() {
                                 <p className="text-zinc-600 font-medium">Lista de Veiculos</p>
                             </div>
                             <div className="h-full overflow-y-scroll">
-                                <List click={getVeh} />
+                                <List click={getVeh} list={list} loading={listLoading} />
                             </div>
                         </div>
                         <div className="h-auto">

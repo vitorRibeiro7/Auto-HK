@@ -7,7 +7,8 @@ import Footer from "../Footer"
 import { useState, useEffect } from "react"
 import { api } from "../../services/api"
 import Loading from "../Loading"
-import Modal from "../Modal"
+
+import CreateModal from "../CreateModal"
 
 interface vehicleInfosTypes {
     name: string;
@@ -32,7 +33,7 @@ function Main() {
     const [list, setList] = useState<ListTypes[]>([])
     const [listSearch, setListSearch] = useState("")
     const [listLoading, setListLoading] = useState(false)
-    const [isOpenModal, setIsOpenModal] = useState(false)
+    const [isOpenCreateModal, setIsOpenCreateModal] = useState(false)
     const [sold, setSold] = useState(false)
 
 
@@ -48,6 +49,10 @@ function Main() {
             setListLoading(true)
         } finally {
         }
+    }
+
+    const offModal = () => {
+        setIsOpenCreateModal(false)
     }
 
     function tryToserach(tosearch: string) {
@@ -86,14 +91,14 @@ function Main() {
 
     return (
         <main className="flex justify-center flex-col items-center w-full p-4 sm:p-0 h-auto sm:h-5/6">
-            <Modal isOpen={isOpenModal} onClose={() => { setIsOpenModal(false) }}>
+            <CreateModal isOpen={isOpenCreateModal} onClose={offModal}>
                 <h1>
                     Teste
                 </h1>
-            </Modal>
+            </CreateModal>
             <div className="w-10/12 h-auto sm:h-5/6 p-5 flex flex-col flex-nowrap items-center justify-start bg-slate-50">
                 <div className="bg-slate-50 w-full h-24 mb-5 flex justify-center">
-                    <Header click={() => { setIsOpenModal(true) }} />
+                    <Header click={() => { setIsOpenCreateModal(true) }} />
                 </div>
                 <div className=" w-full h-5/6 flex flex-col sm:flex-row">
                     <div className="h-full w-full sm:w-1/2 p-5 bg-slate-50 flex gap-auto flex-col justify-between">
@@ -122,12 +127,17 @@ function Main() {
                             }
                         </div>
                         <div className="h-auto">
-                            <Footer click={() => { setIsOpenModal(true) }} sold={sold} />
+                            {/* <Footer click={() => { setIsOpenCreateModal(true) }} sold={sold} /> */}
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
+            <div className="w-full md:w-7/12 pt-5 px-4 mb-8 mx-auto text-center">
+                <div className="text-sm text-slate-200 py-1">
+                    Criado por Vitor Ribeiro.
+                </div>
+            </div>
+        </main >
     )
 }
 

@@ -104,7 +104,7 @@ function Main() {
         <main className="flex justify-center flex-col items-center w-full p-4 sm:p-0 h-auto sm:h-5/6">
             <CreateModal isOpen={isOpenCreateModal} onClose={offModal} />
             <EditModal isOpen={isOpenEditModal} onClose={offModal} vehicle={vehicleEdit} />
-            <div className="w-10/12 h-auto sm:h-5/6 p-5 flex flex-col flex-nowrap items-center justify-start bg-slate-50">
+            <div className="w-10/12 h-auto sm:h-[82vh] p-5 flex flex-col flex-nowrap items-center justify-start bg-slate-50">
                 <div className="bg-slate-50 w-full h-24 mb-5 flex justify-center">
                     <Header click={() => { setIsOpenCreateModal(true) }} />
                 </div>
@@ -140,12 +140,10 @@ function Main() {
                     </div>
                 </div>
             </div>
-            <div className="absolute bottom-4">
-                <div className="text-4xl text-slate-200 py-1">
-                    <a href="https://github.com/vitorRibeiro7/Auto-HK" target="_blank" rel="noreferrer">
-                        <BsGithub />
-                    </a>
-                </div>
+            <div className="absolute bottom-5 right-5 w-auto h-auto">
+                <a href="https://github.com/vitorRibeiro7/Auto-HK" target="_blank" rel="noreferrer">
+                    <BsGithub className="text-slate-50 text-4xl" />
+                </a>
             </div>
         </main >
     )

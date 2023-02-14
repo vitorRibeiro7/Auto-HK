@@ -2,6 +2,7 @@ import Modal from "../Modal"
 import Form from "../Form";
 
 import { api } from "../../services/api";
+import { useState } from "react";
 
 interface valuesType {
     name: string;
@@ -13,6 +14,7 @@ interface valuesType {
 
 function CreateModal({ isOpen, onClose }: any) {
 
+    const [loadingButton, setLoadingButton] = useState(false)
 
     const initialValues = {
         name: "",
@@ -27,6 +29,8 @@ function CreateModal({ isOpen, onClose }: any) {
         console.log(values)
 
         try {
+            setLoadingButton(true)
+
             await api.post("/vehicle", {
                 name: values.name,
                 brand: values.brand,
@@ -43,7 +47,7 @@ function CreateModal({ isOpen, onClose }: any) {
 
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
-            <Form initialValues={initialValues} onSubmit={handleSubmit} onCancel={onClose} title="Adicionar Veiculo" flag={false} />
+            <Form initialValues={initialValues} onSubmit={handleSubmit} onCancel={onClose} title="Adicionar Veiculo" flag={false} loading={loadingButton} />
         </Modal>
     )
 }

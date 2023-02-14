@@ -142,7 +142,7 @@ function Main() {
             </div>
             <div className="absolute bottom-4">
                 <div className="text-4xl text-slate-200 py-1">
-                    <a href="https://www.google.com" target="_blank" rel="noreferrer">
+                    <a href="https://github.com/vitorRibeiro7/Auto-HK" target="_blank" rel="noreferrer">
                         <BsGithub />
                     </a>
                 </div>

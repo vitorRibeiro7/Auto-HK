@@ -1,10 +1,10 @@
 import { BsFillPencilFill, BsFillTagFill } from 'react-icons/bs'
 
 
-function Footer({ sold, click }: any) {
+function Footer({ sold, click, state }: any) {
     return (
         <div className="w-full bg-blue-100 p-4 px-6 flex justify-between items-center border-t-2 border-blue-600">
-            <button className='flex gap-4 w-36 justify-between items-center flex-row bg-blue-600 text-white p-3 font-semibold' onClick={click}>
+            <button className={`flex gap-4 w-36 justify-between items-center flex-row bg-blue-600 text-white p-3 font-semibold disabled:bg-zinc-600`} onClick={click} disabled={state}>
                 Editar
                 <BsFillPencilFill />
             </button>

@@ -31,10 +31,11 @@ function CreateModal({ isOpen, onClose }: any) {
                 name: values.name,
                 brand: values.brand,
                 year: values.year,
-                desc: values.description,
+                description: values.description,
                 sold: values.sold,
             });
 
+            window.location.reload()
         } catch (error) {
             console.log(error);
         }

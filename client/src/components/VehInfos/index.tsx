@@ -19,7 +19,7 @@ function VehInfos({ vehInfo }: any) {
                 </div>
             </div>
             <div className="max-h-52">
-                <p className="text-[1vw] font-normal overflow-auto">{vehInfoItem.desc}</p>
+                <p className="text-[1vw] font-normal overflow-auto">{vehInfoItem.description}</p>
             </div>
         </div>
     )

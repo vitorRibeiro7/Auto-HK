@@ -76,7 +76,7 @@ function Form({ initialValues, onSubmit, title, flag, onCancel }: { initialValue
                 </div >
                 <div className="flex flex-row w-full justify-start items-center content-center">
                     <div className="flex flex-col w-full h-auto">
-                        <label htmlFor="desc">Descrição</label>
+                        <label htmlFor="description">Descrição</label>
                         <div className="w-max-full">
                             <textarea
                                 id="description"

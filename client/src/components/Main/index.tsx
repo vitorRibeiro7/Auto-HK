@@ -9,10 +9,13 @@ import { api } from "../../services/api"
 import Loading from "../Loading"
 
 import CreateModal from "../CreateModal"
+import EditModal from "../EditModal"
+
+import { BsGithub } from 'react-icons/bs';
 
 interface vehicleInfosTypes {
     name: string;
-    desc: string;
+    description: string;
     brand: string;
     year: number;
     sold: boolean;
@@ -29,11 +32,13 @@ interface ListTypes {
 function Main() {
 
     const [vehicleInfos, setVehicleInfos] = useState<vehicleInfosTypes[]>([])
+    const [vehicleEdit, setVehicleEdit] = useState<vehicleInfosTypes[]>([])
     const [descLoading, setDescLoading] = useState(true)
     const [list, setList] = useState<ListTypes[]>([])
     const [listSearch, setListSearch] = useState("")
     const [listLoading, setListLoading] = useState(false)
     const [isOpenCreateModal, setIsOpenCreateModal] = useState(false)
+    const [isOpenEditModal, setIsOpenEditModal] = useState(false)
     const [sold, setSold] = useState(false)
 
 
@@ -53,6 +58,12 @@ function Main() {
 
     const offModal = () => {
         setIsOpenCreateModal(false)
+        setIsOpenEditModal(false)
+    }
+
+    const handleOpenEdit = () => {
+        setVehicleEdit(vehicleInfos)
+        setIsOpenEditModal(true)
     }
 
     function tryToserach(tosearch: string) {
@@ -91,11 +102,8 @@ function Main() {
 
     return (
         <main className="flex justify-center flex-col items-center w-full p-4 sm:p-0 h-auto sm:h-5/6">
-            <CreateModal isOpen={isOpenCreateModal} onClose={offModal}>
-                <h1>
-                    Teste
-                </h1>
-            </CreateModal>
+            <CreateModal isOpen={isOpenCreateModal} onClose={offModal} />
+            <EditModal isOpen={isOpenEditModal} onClose={offModal} vehicle={vehicleEdit} />
             <div className="w-10/12 h-auto sm:h-5/6 p-5 flex flex-col flex-nowrap items-center justify-start bg-slate-50">
                 <div className="bg-slate-50 w-full h-24 mb-5 flex justify-center">
                     <Header click={() => { setIsOpenCreateModal(true) }} />
@@ -127,14 +135,16 @@ function Main() {
                             }
                         </div>
                         <div className="h-auto">
-                            {/* <Footer click={() => { setIsOpenCreateModal(true) }} sold={sold} /> */}
+                            <Footer click={handleOpenEdit} sold={sold} state={descLoading} />
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="w-full md:w-7/12 pt-5 px-4 mb-8 mx-auto text-center">
-                <div className="text-sm text-slate-200 py-1">
-                    Criado por Vitor Ribeiro.
+            <div className="absolute bottom-4">
+                <div className="text-4xl text-slate-200 py-1">
+                    <a href="https://www.google.com" target="_blank" rel="noreferrer">
+                        <BsGithub />
+                    </a>
                 </div>
             </div>
         </main >

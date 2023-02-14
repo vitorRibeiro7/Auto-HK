@@ -1,6 +1,6 @@
 import { BsFillTagFill } from "react-icons/bs";
 
-interface Card {
+interface CardProps {
     brand: string;
     name: string;
     year: number;
@@ -8,10 +8,10 @@ interface Card {
     click: any;
 }
 
-function Card({ brand, name, year, sold, click }: Card) {
+function Card({ brand, name, year, sold, click }: CardProps) {
 
     return (
-        <button className="w-[98%] h-full flex justify-between bg-slate-50 items-center px-4 py-2 gap-4 cursor-pointer border border-gray-200 rounded-lg shadow hover:bg-gray-200" onClick={click}>
+        <button className="w-[98%] max-h-24 h-full flex justify-between bg-slate-50 items-center px-4 py-2 gap-4 cursor-pointer border border-gray-200 rounded-lg shadow hover:bg-gray-200" onClick={click}>
             <div className="text-left w-full">
                 <p className="text-lg text-zinc-800 font-medium text">{brand}</p>
                 <p className="text-XL text-blue-600 font-semibold">{name}</p>

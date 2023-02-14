@@ -12,7 +12,7 @@ interface VehicleTypes {
 function List({ click, list, loading }: { click: (vehicle: VehicleTypes) => void, list: VehicleTypes[], loading: boolean }) {
 
     return (
-        <div className={`flex flex-col gap-2 h-96 pb-14 w-full mb-4 ${loading ? "items-center justify-center" : ''} `}>
+        <div className={`flex flex-col gap-2 h-96 w-full mb-4 ${loading ? "items-center justify-center" : ''} `}>
 
             {
                 !loading ?

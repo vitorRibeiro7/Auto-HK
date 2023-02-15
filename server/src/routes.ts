@@ -48,7 +48,7 @@ export async function appRoutes(app: FastifyInstance) {
         return vehicles
     })
 
-    app.get('/vehicles', async () => {
+    app.get('/vehicle', async () => {
 
         const vehs = await prisma.vehicle.findMany()
 

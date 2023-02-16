@@ -10,6 +10,7 @@ import Loading from "../Loading"
 
 import CreateModal from "../CreateModal"
 import EditModal from "../EditModal"
+import ConfirmModal from "../ConfirmModal"
 
 import { BsGithub } from 'react-icons/bs';
 
@@ -33,12 +34,14 @@ function Main() {
 
     const [vehicleInfos, setVehicleInfos] = useState<vehicleInfosTypes[]>([])
     const [vehicleEdit, setVehicleEdit] = useState<vehicleInfosTypes[]>([])
+    const [vehicleDelete, setVehicleDelete] = useState<vehicleInfosTypes[]>([])
     const [descLoading, setDescLoading] = useState(true)
     const [list, setList] = useState<ListTypes[]>([])
     const [listSearch, setListSearch] = useState("")
     const [listLoading, setListLoading] = useState(false)
     const [isOpenCreateModal, setIsOpenCreateModal] = useState(false)
     const [isOpenEditModal, setIsOpenEditModal] = useState(false)
+    const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false)
     const [sold, setSold] = useState(false)
 
 
@@ -59,11 +62,17 @@ function Main() {
     const offModal = () => {
         setIsOpenCreateModal(false)
         setIsOpenEditModal(false)
+        setIsOpenConfirmModal(false)
     }
 
     const handleOpenEdit = () => {
         setVehicleEdit(vehicleInfos)
         setIsOpenEditModal(true)
+    }
+
+    const handleOpenDelete = () => {
+        setVehicleDelete(vehicleInfos)
+        setIsOpenConfirmModal(true)
     }
 
     function tryToserach(tosearch: string) {
@@ -104,6 +113,7 @@ function Main() {
         <main className="flex justify-center flex-col items-center w-full p-4 sm:p-0 h-auto sm:h-5/6">
             <CreateModal isOpen={isOpenCreateModal} onClose={offModal} />
             <EditModal isOpen={isOpenEditModal} onClose={offModal} vehicle={vehicleEdit} />
+            <ConfirmModal isOpen={isOpenConfirmModal} onClose={offModal} vehicle={vehicleDelete} />
             <div className="w-10/12 h-auto sm:h-[82vh] p-5 flex flex-col flex-nowrap items-center justify-start bg-slate-50">
                 <div className="bg-slate-50 w-full h-24 mb-5 flex justify-center">
                     <Header click={() => { setIsOpenCreateModal(true) }} />
@@ -135,7 +145,7 @@ function Main() {
                             }
                         </div>
                         <div className="h-auto">
-                            <Footer click={handleOpenEdit} sold={sold} state={descLoading} />
+                            <Footer click={handleOpenEdit} sold={sold} state={descLoading} clickToDelete={handleOpenDelete} />
                         </div>
                     </div>
                 </div>
